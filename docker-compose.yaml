@@ -1,0 +1,29 @@
+services:
+  # MinIO server
+  # minio:
+  #   image: minio/minio
+  #   expose:
+  #     - "9000"
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001"
+  #   environment:
+  #     MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+  #     MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+  #   command: server /data --console-address ":9001"
+  #   volumes:
+  #     - minio-data:/data
+
+  mlflow-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-data:/mlflow
+
+
+volumes:
+  # minio-data:
+  mlflow-data:
