@@ -218,3 +218,5 @@ __marimo__/
 # Original data 
 original_dataset 
 
+# Training data 
+training_datasets

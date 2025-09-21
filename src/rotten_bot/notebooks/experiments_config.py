@@ -24,7 +24,7 @@ class MlflowConfig:
 
     # the experiment where the runs will be logged, make sure to create the experiment with the utils function
     # in experiment_utils.ipynb
-    MLFLOW_EXPERIMENT_NAME = "Smart_Recycling_AI"
+    MLFLOW_EXPERIMENT_NAME = "RottenBot-All-Classes"
 
     # set the mlflow run name, make sure it's unique for each run (IMPORTANT for better tracking in the MLflow UI)
     MLFLOW_RUN_NAME = "EfficientNetV2B0_Freezed"
@@ -36,30 +36,35 @@ class MlflowConfig:
     # and recommend, because codebase can change over time
     MLFLOW_LOG_GIT_SHA = True
 
+    # IMPORTANT, currently not usable because of a bug in mlflow
     # optional log the model to mlflow, this is useful for model deployment later on
     # disable it when you perform initial experiments to save time and space
-    MLFLOW_LOG_MODEL = True
+    MLFLOW_LOG_MODEL = False
 
     # the configuration for the logged model, it's only used if MLFLOW_LOG_MODEL is True
     # note that the model and signature are dynamically set during the run
     # the "name" is the name of the model in mlflow, you can change it to whatever you want
     # the "registered_model_name" is the name of the registered model in mlflow, it can be None if you don't want to register the model
-    # the "keras_model_kwargs" are the arguments passed to the keras model save function
     MLFLOW_LOG_MODEL_CONFIG = {
         "name": "model",
-        "keras_model_kwargs": {"save_format": "keras"},
         "registered_model_name": None,
     }
+
+    # Workaround for the above bug, save the model manually and log it as an artifact
+    MLFLOW_SAVE_MODEL_AS_ARTIFACT = True
+    MLFLOW_SAVE_MODEL_NAME = (
+        "model.keras"  # only used if MLFLOW_SAVE_MODEL_AS_ARTIFACT is True
+    )
 
 
 class DatasetConfig:
     # the dataset will be tracked as a "tag" in the mlflow run
     # if you change the dataset, change also the tag accordingly
-    DATASET = "garbage-dataset-v1"
+    DATASET = "rottenbot_all_classesv1"
 
     # the path to the dataset folder, make sure its already been splitted in train, val, test folders
     # if not, you can use the utils function in the experiment_utils.ipynb notebook to split it.
-    DATASET_FOLDER = f"/home/ubuntu/dev/smart_recycling/{DATASET}"
+    DATASET_FOLDER = f"/home/ubuntu/dev/fruit_vege_disease/training_datasets/{DATASET}"
 
     # the image size to resize the images for model training
     IMAGE_SIZE = (224, 224)
@@ -96,13 +101,13 @@ class ModelConfig:
         [
             tf.keras.Input(shape=(224, 224, 3)),
             tf.keras.layers.RandomFlip("horizontal_and_vertical", seed=42),
-            tf.keras.layers.RandomRotation(0.12, seed=42),
-            tf.keras.layers.RandomZoom(0.12, seed=42),
-            tf.keras.layers.RandomContrast(0.12, seed=42),
-            tf.keras.layers.RandomBrightness(0.12, seed=42),
+            tf.keras.layers.RandomRotation(0.15, seed=42),
+            tf.keras.layers.RandomZoom(0.15, seed=42),
+            tf.keras.layers.RandomContrast(0.15, seed=42),
+            tf.keras.layers.RandomBrightness(0.15, seed=42),
             BACKBONE,
             tf.keras.layers.GlobalAveragePooling2D(),
-            tf.keras.layers.Dense(8, activation="softmax", dtype="float32"),
+            tf.keras.layers.Dense(28, activation="softmax", dtype="float32"),
         ]
     )
 
