@@ -1,6 +1,6 @@
 import sklearn
 import numpy as np
-from smart_recycling.utils.logging import get_configured_logger
+from rotten_bot.utils.logging import get_configured_logger
 
 _logger = get_configured_logger()
 
