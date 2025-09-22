@@ -12,7 +12,7 @@ def save_confusion_matrix(
     y_true: np.ndarray,
     y_pred: np.ndarray,
     class_names: np.ndarray = None,
-    figsize: tuple[int, int] = (10, 10),
+    figsize: tuple[int, int] = (20, 20),
     text_size: int = 15,
     cmap: str = "Blues",
     norm: bool = False,
@@ -75,7 +75,7 @@ def save_confusion_matrix(
         )
         ax.xaxis.set_label_position("bottom")
         ax.xaxis.tick_bottom()
-        plt.xticks(rotation=70, fontsize=text_size)
+        plt.xticks(rotation=90, fontsize=text_size, ha="center")
         plt.yticks(fontsize=text_size)
 
         # Annotate the cells with the appropriate values

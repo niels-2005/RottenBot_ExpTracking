@@ -125,7 +125,7 @@ class ModelConfig:
 
 class ModelTrainingConfig:
     # the number of epochs to train the model, if you use early stopping as callback, it can be kept high
-    EPOCHS = 100
+    EPOCHS = 2
 
     # optionally compute the class weights, its recommend when you're dealing with imbalanced datasets
     # its recommend to use "balanced" method, but you can experiment with different methods
