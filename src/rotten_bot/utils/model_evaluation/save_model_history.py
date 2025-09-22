@@ -5,6 +5,18 @@ from typing import Tuple
 
 
 def save_model_history(history, figsize: Tuple[int, int] = (10, 6)) -> None:
+    """Saves the model training history to MLflow and generates a loss curve plot.
+
+    This function logs the training history dictionary as a JSON artifact in MLflow,
+    extracts the training and validation loss values, and creates a plot of the loss
+    curves over epochs. The plot is then logged as an image artifact in MLflow.
+
+    Args:
+        history: The training history object from Keras (e.g., returned by model.fit()).
+            It should contain 'loss' and 'val_loss' keys in its history attribute.
+        figsize (Tuple[int, int], optional): The size of the plot figure as (width, height)
+            in inches. Defaults to (10, 6).
+    """
     mlflow.log_dict(history.history, "model_history.json")
     loss = history.history["loss"]
     val_loss = history.history["val_loss"]

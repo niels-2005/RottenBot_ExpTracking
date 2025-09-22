@@ -1,5 +1,7 @@
 from rotten_bot.utils.etl.get_datasets import get_tensorflow_dataset
-from rotten_bot.utils.etl.split_folder import split_dataset
+from rotten_bot.utils.model_evaluation.save_wrong_predictions_plot import (
+    save_wrong_predictions,
+)
 from rotten_bot.utils.model_evaluation.save_confusion_matrix import (
     save_confusion_matrix,
 )

@@ -20,7 +20,10 @@ dependencies = [
 
 [project.scripts]
 rotten-bot = "rotten_bot:main"
-experiment = "rotten_bot.run_experiment:run_experiment"
+run-experiment = "rotten_bot.run_experiment:run_experiment"
+create-experiment = "rotten_bot.create_experiment:create_experiment"
+split-folders = "rotten_bot.split_folders:split_dataset"
+
 
 [build-system]
 requires = ["uv_build>=0.8.4,<0.9.0"]

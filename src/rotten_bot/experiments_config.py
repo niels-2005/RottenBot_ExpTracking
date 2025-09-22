@@ -24,15 +24,14 @@ class MlflowConfig:
     # optional enable system metrics logging (CPU, RAM, GPU usage), you can inspect these metrics in the MLflow UI
     ENABLE_SYSTEM_METRICS_LOGGING = False
 
-    # the experiment where the runs will be logged, make sure to create the experiment with the utils function
-    # in experiment_utils.ipynb
+    # the experiment where the runs will be logged, make sure to create the experiment with the create_experiment.py script
     MLFLOW_EXPERIMENT_NAME = "RottenBot-All-Classes"
 
     # set the mlflow run name, make sure it's unique for each run (IMPORTANT for better tracking in the MLflow UI)
-    MLFLOW_RUN_NAME = "EfficientNetV2B0_Freezed"
+    MLFLOW_RUN_NAME = "MobileNetV3Large_Freezed_M10"
 
     # you can set a run description, it's good to have. It'll visibly appear in the UI
-    MLFLOW_RUN_DESCRIPTION = "EfficientNetV2B0 with freezed backbone, data augmentation and class weights. Adam and CategoricalCrossentropy."
+    MLFLOW_RUN_DESCRIPTION = "MobileNetV3Large with freezed backbone (just last 10 layers + top), data augmentation and class weights. Adam and CategoricalCrossentropy."
 
     # optional log the git commit sha, it's really useful for traceability
     # and recommend, because codebase can change over time
@@ -87,7 +86,7 @@ class ModelConfig:
     # if its set to True, make sure your last layer in the model has dtype="float32". THATS IMPORTANT!
     ENABLE_MIXED_PRECISION = True
 
-    BACKBONE = tf.keras.applications.EfficientNetV2B0(
+    BACKBONE = tf.keras.applications.MobileNetV3Large(
         include_top=False,
         weights="imagenet",
         input_shape=(224, 224, 3),
@@ -95,6 +94,9 @@ class ModelConfig:
         include_preprocessing=True,
     )
     BACKBONE.trainable = False
+
+    for layer in BACKBONE.layers[-10:]:
+        layer.trainable = True
 
     # the model architecture, you can change it to experiment with different architectures
     # and evaluate their performance in the MLflow UI
@@ -169,6 +171,10 @@ class ModelEvaluationConfig:
     SAVE_CONFUSION_MATRIX = True
 
     # optionally save all predictions with true labels, predicted labels, predicted probabilities, file_paths
-    # it saves two csv files, one with alle the predictions and one with only the misclassified samples
+    # it saves three csv files, one with all the predictions, one with only the misclassified samples
+    # and one with only the misclassified samples above the threshold
     # It will only computed if INCLUDE_EVALUATION_ON_TEST_SET is True
     SAVE_PREDICTION_CSV = True
+
+    # only misclassified samples with predicted probability above the threshold will be saved
+    SAVE_PREDICTION_CSV_THRESHOLD = 0.9

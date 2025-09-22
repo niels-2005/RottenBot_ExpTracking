@@ -28,9 +28,6 @@ import tensorflow as tf
 
 
 def run_experiment():
-    # needed for a bit more reproducible results when using TF
-    os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
-
     # load the configurations
     common_config = CommonConfig()
     mlflow_config = MlflowConfig()
@@ -164,4 +161,11 @@ def run_experiment():
 
         # optional save two csv, one with all predictions and one with missclassified samples
         if evaluation_config.SAVE_PREDICTION_CSV:
-            save_prediction_csv(file_paths, y_true, y_pred, y_probs, class_names)
+            save_prediction_csv(
+                file_paths,
+                y_true,
+                y_pred,
+                y_probs,
+                class_names,
+                evaluation_config.SAVE_PREDICTION_CSV_THRESHOLD,
+            )
