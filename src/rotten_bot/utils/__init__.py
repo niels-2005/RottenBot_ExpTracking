@@ -14,3 +14,4 @@ from rotten_bot.utils.model_training.compute_class_weights import (
 )
 from rotten_bot.utils.model_evaluation.save_model_history import save_model_history
 from rotten_bot.utils.etl.get_true_labels_dataset import get_true_labels
+from rotten_bot.utils.get_git_sha import get_current_git_sha

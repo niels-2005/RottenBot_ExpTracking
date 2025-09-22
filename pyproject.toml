@@ -20,6 +20,7 @@ dependencies = [
 
 [project.scripts]
 rotten-bot = "rotten_bot:main"
+experiment = "rotten_bot.run_experiment:run_experiment"
 
 [build-system]
 requires = ["uv_build>=0.8.4,<0.9.0"]
