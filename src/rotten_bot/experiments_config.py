@@ -28,19 +28,19 @@ class MlflowConfig:
     MLFLOW_EXPERIMENT_NAME = "RottenBot-All-Classes"
 
     # set the mlflow run name, make sure it's unique for each run (IMPORTANT for better tracking in the MLflow UI)
-    MLFLOW_RUN_NAME = "MobileNetV3Large_Freezed_M10"
+    MLFLOW_RUN_NAME = "MobileNetV3Large_Freezed_M10_A1e4"
 
     # you can set a run description, it's good to have. It'll visibly appear in the UI
-    MLFLOW_RUN_DESCRIPTION = "MobileNetV3Large with freezed backbone (just last 10 layers + top), data augmentation and class weights. Adam and CategoricalCrossentropy."
+    MLFLOW_RUN_DESCRIPTION = "MobileNetV3Large with freezed backbone (just last 10 layers + top), data augmentation and class weights. Adam(1e4) and CategoricalCrossentropy."
 
     # optional log the git commit sha, it's really useful for traceability
     # and recommend, because codebase can change over time
     MLFLOW_LOG_GIT_SHA = True
 
-    # !!!!! IMPORTANT, currently not usable because of a bug in mlflow
+    #
     # optional log the model to mlflow, this is useful for model deployment later on
     # disable it when you perform initial experiments to save time and space
-    MLFLOW_LOG_MODEL = False
+    MLFLOW_LOG_MODEL = True
 
     # the configuration for the logged model, it's only used if MLFLOW_LOG_MODEL is True
     # note that the model and signature are dynamically set during the run
@@ -49,13 +49,8 @@ class MlflowConfig:
     MLFLOW_LOG_MODEL_CONFIG = {
         "name": "model",
         "registered_model_name": None,
+        "keras_model_kwargs": {"save_format": "keras"},
     }
-
-    # Workaround for the above bug, save the model manually and log it as an artifact
-    MLFLOW_SAVE_MODEL_AS_ARTIFACT = True
-    MLFLOW_SAVE_MODEL_NAME = (
-        "model.keras"  # only used if MLFLOW_SAVE_MODEL_AS_ARTIFACT is True
-    )
 
 
 class DatasetConfig:
@@ -73,7 +68,7 @@ class DatasetConfig:
     # the batch size for training, validation and test datasets
     # the train batch size can affect the model performance, increase for faster training.
     # The validation and test batch sizes can be kept low to save memory or high to speed up evaluation
-    TRAIN_BATCH_SIZE = 64
+    TRAIN_BATCH_SIZE = 32
     VALIDATION_BATCH_SIZE = 32
     TEST_BATCH_SIZE = 32
 
@@ -105,10 +100,10 @@ class ModelConfig:
         [
             tf.keras.Input(shape=(224, 224, 3)),
             tf.keras.layers.RandomFlip("horizontal_and_vertical", seed=42),
-            tf.keras.layers.RandomRotation(0.15, seed=42),
-            tf.keras.layers.RandomZoom(0.15, seed=42),
-            tf.keras.layers.RandomContrast(0.15, seed=42),
-            tf.keras.layers.RandomBrightness(0.15, seed=42),
+            tf.keras.layers.RandomRotation(0.25, seed=42),
+            tf.keras.layers.RandomZoom(0.25, seed=42),
+            tf.keras.layers.RandomContrast(0.25, seed=42),
+            tf.keras.layers.RandomBrightness(0.25, seed=42),
             BACKBONE,
             tf.keras.layers.GlobalAveragePooling2D(),
             tf.keras.layers.Dense(28, activation="softmax", dtype="float32"),
@@ -118,14 +113,14 @@ class ModelConfig:
     # the model compilation parameters
     # you can change the optimizer, loss function and metrics to experiment
     # you can have as much metrics as you want. Just make sure that they are placed in a list.
-    OPTIMIZER = tf.keras.optimizers.Adam(learning_rate=0.001)
+    OPTIMIZER = tf.keras.optimizers.Adam(learning_rate=0.0001)
     LOSS = tf.keras.losses.CategoricalCrossentropy()
     METRICS = [tf.keras.metrics.F1Score(average="weighted")]
 
 
 class ModelTrainingConfig:
     # the number of epochs to train the model, if you use early stopping as callback, it can be kept high
-    EPOCHS = 2
+    EPOCHS = 100
 
     # optionally compute the class weights, its recommend when you're dealing with imbalanced datasets
     # its recommend to use "balanced" method, but you can experiment with different methods
@@ -137,7 +132,7 @@ class ModelTrainingConfig:
     )
 
     REDUCE_LR_ON_PLATEAU_CALLBACK = tf.keras.callbacks.ReduceLROnPlateau(
-        monitor="val_loss", factor=0.1, patience=5, min_lr=1e-7
+        monitor="val_loss", factor=0.1, patience=5, min_lr=1e-6
     )
 
     MLFLOW_CALLBACK = mlflow.tensorflow.MlflowCallback()

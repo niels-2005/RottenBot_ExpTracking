@@ -2,9 +2,9 @@ FROM python:3.10-slim
 
 WORKDIR /mlflow 
 
-RUN pip install mlflow psycopg2-binary
+RUN pip install mlflow 
 
-ENV BACKEND_URI postgresql://mlflow_user:mlflow_pass@postgres:5432/mlflowdb
+ENV BACKEND_URI sqlite:///mlflow.db
 
 EXPOSE 5000 
 

@@ -108,11 +108,22 @@ def run_experiment():
         class_weight=class_weight,
     )
 
-    # Workaround to log the model as an artifact due to MLflow bug
-    if mlflow_config.MLFLOW_SAVE_MODEL_AS_ARTIFACT:
-        model.save(mlflow_config.MLFLOW_SAVE_MODEL_NAME)
-        mlflow.log_artifact(mlflow_config.MLFLOW_SAVE_MODEL_NAME, artifact_path="model")
-        os.remove(mlflow_config.MLFLOW_SAVE_MODEL_NAME)
+    if mlflow_config.MLFLOW_LOG_MODEL:
+        # get a input example for the model signature
+        for x, y in val_dataset.take(1):
+            input_example = x[:1].numpy()
+            break
+
+        # # save the model history for later use
+        model_history = history
+
+        # set the history to None to avoid issues with keras model serialization.
+        model.history = None
+        mlflow.tensorflow.log_model(
+            model,
+            **mlflow_config.MLFLOW_LOG_MODEL_CONFIG,
+            input_example=input_example,
+        )
 
     # Optional evaluate the model on the test set
     if evaluation_config.INCLUDE_EVALUATION_ON_TEST_SET:
@@ -132,7 +143,7 @@ def run_experiment():
             mlflow.log_metric(f"test_{name}", value)
 
         if evaluation_config.SAVE_MODEL_HISTORY:
-            save_model_history(history)
+            save_model_history(model_history)
 
         # optional save the prediction time to mlflow (in milliseconds)
         if evaluation_config.SAVE_PREDICTION_TIME:
