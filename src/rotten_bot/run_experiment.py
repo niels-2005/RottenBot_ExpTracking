@@ -137,6 +137,12 @@ def run_experiment():
             seed=common_config.SEED,
         )
 
+        # get the class names and log them to mlflow, this is needed for deployment
+        # because the class names are not stored in the model
+        class_names = test_dataset.class_names
+        index_to_class = {idx: cls for idx, cls in enumerate(class_names)}
+        mlflow.log_dict(index_to_class, "index_to_class.json")
+
         test_results = model.evaluate(test_dataset, return_dict=True)
         # log the test results to mlflow with a "test_" prefix
         for name, value in test_results.items():
@@ -160,7 +166,6 @@ def run_experiment():
             y_true = get_true_labels(test_dataset)
 
             file_paths = test_dataset.file_paths
-            class_names = test_dataset.class_names
 
         # optional save the confusion matrix to mlflow as plot
         if evaluation_config.SAVE_CONFUSION_MATRIX:
