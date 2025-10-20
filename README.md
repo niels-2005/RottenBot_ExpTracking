@@ -189,31 +189,6 @@ rotten_bot/
 - Add `run_experiment_llm.py` for language models as example.
 - Extend to other tasks (object detection, segmentation, etc.)
 
-## 📈 Best Practices Implemented
-
-### 1. Reproducibility
-- **Seeds everywhere**: TensorFlow, NumPy, data augmentation layers
-- **Deterministic operations**: `TF_ENABLE_ONEDNN_OPTS=0`
-- **Version tracking**: Git SHA, config files, dataset tags
-
-### 2. Handling Imbalanced Data
-- **Class weighting**: Automatically computed using `sklearn.utils.class_weight`
-- **Weighted metrics**: F1-score with weighted average
-
-### 3. Efficient Training
-- **Mixed precision**: 2x faster training on modern GPUs
-- **Transfer learning**: Leverage pre-trained ImageNet weights
-- **Callbacks**: Early stopping prevents overfitting, ReduceLROnPlateau improves convergence
-
-### 4. Production Readiness
-- **Index to class mapping**: Required for inference
-- **Prediction benchmarking**: Know your latency requirements
-
-### 5. Model Interpretation
-- **Confusion matrix**: Identify problematic class pairs
-- **Misclassification analysis**: CSV with confidence scores
-- **High-confidence errors**: Filter by threshold (default 0.9)
-
 ## 📄 License
 
 This project is licensed under the MIT License.
