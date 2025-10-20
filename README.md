@@ -168,7 +168,7 @@ The framework uses **MobileNetV3Large** as the backbone for efficient training a
 
 ### Extensibility
 
-The modular design allows easy extension to:
+The modular design allows easy extension to other frameworks and tasks.:
 
 ```
 rotten_bot/
@@ -180,13 +180,13 @@ rotten_bot/
     ├── ...                   
 ```
 
-**Future Extensions**:
+### Future Extensions
+
 - Add Hyperparameter tuning support (e.g. Keras Tuner)
 - Add Tensorflow Lite support for Edge Devices or Quantization
-- Change `run_experiment.py` to `run_experiment_tf.py` for TensorFlow models 
-- Add `run_experiment_pytorch.py` for PyTorch models
-- Add `run_experiment_sklearn.py` for traditional ML
-- Add `run_experiment_llm.py` for language models as example.
+- Change `run_experiment.py` to `run_experiment_tf.py` and `experiments_config.py` to `experiments_config_tf.py` for tensorflow models
+- Add `run_experiment_pytorch.py` and `experiments_config_pytorch.py` for PyTorch models
+- Add `run_experiment_sklearn.py` and `experiments_config_sklearn.py` for traditional ML
 - Extend to other tasks (object detection, segmentation, etc.)
 
 ## 📄 License
