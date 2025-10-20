@@ -45,7 +45,7 @@ This repository provides a framework for training, evaluating, and tracking deep
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/niels-2005/RottenBot_ExpTracking.git
    cd fruit_vege_disease
    ```
 

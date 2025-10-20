@@ -2,7 +2,7 @@ import tensorflow as tf
 import mlflow
 
 # This Config file is used to configure the experiments
-# it'll be imported in the run_experiments.ipynb notebook and affect the whole experiment run
+# it'll be imported in the run_experiments.py and affect the whole experiment run
 # the file will be logged in MLflow for future auditability, so make sure to use only relevant configurations.
 
 
