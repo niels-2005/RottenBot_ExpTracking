@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-This repository provides a framework for training, evaluating, and tracking deep learning models for image classification. While the current implementation focuses on detecting healthy vs. rotten fruits and vegetables (28 classes) with TensorFlow/Keras, the architecture is designed to be easily extensible for:
+This repository provides a framework for training, evaluating, and tracking deep learning models for image classification. While the current implementation focuses on detecting healthy vs. rotten fruits and vegetables (28 classes) with TensorFlow/Keras, the architecture is designed to be easily extensible and reusable for:
 
 - **PyTorch-based training pipelines**
 - **Scikit-learn models**
