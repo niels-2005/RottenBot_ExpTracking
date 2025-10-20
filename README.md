@@ -6,7 +6,6 @@ This repository provides a framework for training, evaluating, and tracking deep
 
 - **PyTorch-based training pipelines**
 - **Scikit-learn models**
-- **Large Language Models (LLMs)**
 - **Any ML task that benefits from MLflow tracking**
 
 ## ✨ Key Features
@@ -29,7 +28,6 @@ This repository provides a framework for training, evaluating, and tracking deep
 ### Comprehensive Evaluation
 - Training history visualization (loss and metrics curves)
 - Confusion matrix generation
-- Per-class performance analysis
 - Prediction time benchmarking (ms per sample)
 - CSV exports with all predictions and misclassifications
 - Confidence-based filtering for model interpretation
