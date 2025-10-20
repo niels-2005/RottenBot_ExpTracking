@@ -6,7 +6,10 @@ _logger = get_configured_logger()
 
 
 class SplitDatasetConfig:
+    # the source folder containing the original dataset, assuming it's organized in class subfolders and its not yet splitted
     SOURCE_FOLDER = "/home/ubuntu/dev/fruit_vege_disease/original_dataset/dataset"
+
+    # the output folder where the splitted dataset will be stored
     OUTPUT_FOLDER = (
         "/home/ubuntu/dev/fruit_vege_disease/training_datasets/rottenbot_all_classesv1"
     )
@@ -18,23 +21,16 @@ class SplitDatasetConfig:
     RATIO = (0.75, 0.1, 0.15)
 
 
-def split_dataset() -> None:
+def split_dataset(split_dataset_config: SplitDatasetConfig = SplitDatasetConfig()) -> None:
     """Splits the dataset into training, validation, and test sets.
 
     Args:
-        source_folder (str): Path to the source folder containing the dataset.
-        output_folder (str): Path to the output folder where the split datasets will be saved.
-        seed (int, optional): Random seed for reproducibility. Defaults to 42.
-        ratio (tuple, optional): Proportions for splitting the dataset. Defaults to (0.75, 0.1, 0.15).
-
-    Returns:
-        None
+        split_dataset_config (SplitDatasetConfig, optional): Configuration for dataset splitting. Defaults to SplitDatasetConfig().
 
     Raises:
-        Exception: Exception raised during dataset splitting.
+        e: Exception raised during dataset splitting.
     """
     try:
-        split_dataset_config = SplitDatasetConfig()
         splitfolders.ratio(
             split_dataset_config.SOURCE_FOLDER,
             output=split_dataset_config.OUTPUT_FOLDER,

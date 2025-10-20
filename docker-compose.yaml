@@ -9,8 +9,7 @@ services:
     volumes:
       - mlflow-data:/mlflow
 
-
 volumes:
-  # minio-data:
+  # volume to persist mlflow data, like experiments and artifacts
   mlflow-data:
     name: mlflow-data
