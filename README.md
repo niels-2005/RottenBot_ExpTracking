@@ -44,7 +44,7 @@ This repository provides a framework for training, evaluating, and tracking deep
 1. **Clone the repository**
    ```bash
    git clone https://github.com/niels-2005/RottenBot_ExpTracking.git
-   cd fruit_vege_disease
+   cd RottenBot_ExpTracking
    ```
 
 2. **Set up Python environment with uv**
